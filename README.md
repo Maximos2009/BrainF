@@ -3,7 +3,7 @@ An interpreter for the brainfuck programming language.
 
 ## Brainfuck Tutorial
 You have:
-* An `array` filled with thirty thousand zeros
+* An `array` with thirty thousand zeros
 * A `pointer` that points to which element of the array you want to edit
 
 Brainfuck has these 8 commands that you can use:
