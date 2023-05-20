@@ -50,6 +50,8 @@ Iterates through every character of `code` with the character called `char` and 
 * If `char` is `,`, asks for input and then sets the element of the `array` with the index of `byte` to the [ASCII value](https://www.asciitable.com/) of the input. If an `EOFError` is raised the element is set to zero
 * If `char` is `[`, a variable called `start` is initialized with the value of `idx + 1`. Two variables called `opens` and `closes` are initialized both of which with the value of zero. Iterates through every character of `code` from `idx` until the end with the character called `subchar` and its index called `subidx`. If subchar is `[`, `opens` is inreased by one. If subchar is `]`, `closes` is increased by one. If `opens` is equal to `closes`, a variable called `end` is initialized with the value of `idx + subidx` and the loop ends. If the loop ends without `opens` ever being equal to `closes` and the `error` property is set to `False`, if `opens` is larger than `closes` the `closing_bracket_error` property is printed. Else the `opening_bracket_error` property is printed. Then the `error` property is set to `True` and the execution stops. Now going back to the loop, if it ended successfully, a variable called `subcode` is initialized with the value of `code` from `start` until `end`. While the element of `array` with the index of `byte` is not equal to zero and the `error` property is set to `False` and the `iterations` property is less than the `iteration_limit` property, recursion is used and the `execute()` method is called with the `code` argument being `subcode`. After the loop ends, if the `error` property is set to `False`, the `execute()` method is called with the `code` argument being `code` from `end + 1` untill the end. And finally the loop ends.
 * If `char` is `]` and the `error` property is set to `False`, the `opening_bracket_error` property is printed, the `error` property is set to `True` and the execution stops. All that happends because when there is a loop ends, the code is executed from the end of the loop untill the end meaning the interpreter would normally never see a closing bracket.
+* Every other character is interpreted as a comment
+
 ## The `main()` method
 An `Interpreter` object is initialized with the name of `ip`.
 The user is asked for the path of a brainfuck file and a variable called `filepath` is initialized with the value of the input.
@@ -58,3 +60,37 @@ If the first three letters of `filepath` are not `C:/` or `C:\`, the user is rem
 Else the program tries to open `filepath`. If it succeeds, it breaks out of the loop. If a `FileNotFoundError` is raised, the user is informed and is asked for another path. If a `PermissionError` is raised, the user is informed that they submited a path to a directory instead of a file and again is asked for another path.
 If the file is found, it is used as the `code` argument in the `ip`'s `execute()` method.
 After the file has been executed the exit code, which is `ip`'s `get_error()` method , is printed and the program ends.
+
+## The `test.b` file
+This file's content is this:
+```
+>+++++++++[<++++++++>-]<.            H
+>>++++++++++[<++++++++++>-]<+.       e
++++++++.                             l
+.                                    l
++++.                                 o
+>>++++++++[<++++>-]<.              SPACE
+<<+++++++++++++++.                   W
+>.                                   o
++++.                                 r
+------.                              l
+--------.                            d
+>+.                                  !
+```
+But let's discuss how it works.
+First of all a trick used in brainfuck programming is multiplication. You set an element of the `array` to have a value of `x`. While `x` is larger than 0 you go to an other element and you increase it by `y`. Then you go back to the other byte and decrease it by one and repeat. If for example `x = 3` and `y = 2`, then at the end the value of the second byte will be six. Notice how 6 = 3 * 2. So this trick multiplies `x` by `y`.
+
+Also you should have the [ASCII table](https://www.asciitable.com/) open in another tab.
+
+The first line sets the value of the first byte to `9 * 8 = 72` and then prints `H`
+The second line sets the second byte to `11 * 10 = 110` and increases it by one so that's `e`
+Then, in the third line the second byte is increased by 7 and an `l` is printed
+After that, the same letter is printed
+Following that, the second byte is increased by 3 and an `o` appears on the screen
+On the sixth line the third byte is set to `8 * 4 = 32` which is a `(space)`
+On the next line we go back to the first byte, increase it by 15 and print `W`
+After that line we go back to the second byte and print an `o`
+Coming on the next line, we increase the second byte by 3 and `r` is printed
+Then we decrease the second byte by 6 and that gives us an `l`
+Approaching the end, we decrease the second byte by 8 and we get a `d`
+And finally, we go to the third byte, increase it by one and print `!`
