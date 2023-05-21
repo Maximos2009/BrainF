@@ -1,6 +1,16 @@
 # Brainfuck Interpreter
 An interpreter for the brainfuck programming language.
 
+## How to use
+Firstly the user should have a file with some brainfuck code.
+The program asks the user for the path of that file.
+The input is invlid if:
+* It doesn't start with `C:/` or `C:\`
+* It leads to a directory
+* The file doesn't exist
+
+If the input is invalid the user is informed and asked for another path
+
 ## Brainfuck Tutorial
 You have:
 * An `array` with thirty thousand zeros
